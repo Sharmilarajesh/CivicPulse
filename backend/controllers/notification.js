@@ -1,6 +1,6 @@
 const Notification = require('../models/Notification')
 
-// ─── Get Notifications ────────────────────────────────────
+//  Get Notifications 
 const getNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({ userId: req.user.id })
@@ -15,7 +15,7 @@ const getNotifications = async (req, res) => {
   }
 }
 
-// ─── Mark As Read ─────────────────────────────────────────
+//  Mark As Read 
 const markAsRead = async (req, res) => {
   try {
     const notification = await Notification.findById(req.params.id)
@@ -33,5 +33,26 @@ const markAsRead = async (req, res) => {
     res.status(500).json({ message: 'Server error. Please try again.' })
   }
 }
+//  Delete Notification 
+const deleteNotification = async (req, res) => {
+  try {
+    const notification = await Notification.findById(req.params.id)
 
-module.exports = { getNotifications, markAsRead }
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found' })
+    }
+
+    if (notification.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Not authorized to delete this notification' })
+    }
+
+    await notification.deleteOne()
+
+    res.status(200).json({ message: 'Notification deleted' })
+  } catch (err) {
+    console.error('Delete notification error:', err)
+    res.status(500).json({ message: 'Server error. Please try again.' })
+  }
+}
+
+module.exports = { getNotifications, markAsRead, deleteNotification }

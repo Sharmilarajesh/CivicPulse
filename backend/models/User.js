@@ -20,16 +20,41 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['citizen', 'officer', 'admin'],
+    enum: ['citizen', 'officer', 'admin', 'super_admin'],
     default: 'citizen'
   },
   ward: {
     type: String,
     default: ''
   },
+  district: {
+    type: String,
+    default: null
+  },
   profilePhoto: {
     type: String,
     default: ''
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  isPasswordSet: {
+    type: Boolean,
+    default: false
+  },
+  invitedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
+  inviteToken: {
+    type: String,
+    default: undefined
+  },
+  inviteTokenExpires: {
+    type: Date,
+    default: undefined
   },
   passwordResetToken: {
     type: String,

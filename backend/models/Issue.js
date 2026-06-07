@@ -25,6 +25,10 @@ const issueSchema = new mongoose.Schema({
     city: { type: String, default: '' },
     state: { type: String, default: '' }
   },
+  district: {
+    type: String,
+    default: null
+  },
   photos: {
     type: [String],
     default: []

@@ -1,6 +1,6 @@
 const Issue = require('../models/Issue')
 
-// ─── Get Summary ──────────────────────────────────────────
+//  Get Summary 
 const getSummary = async (req, res) => {
   try {
     const byStatus = await Issue.aggregate([
@@ -20,7 +20,7 @@ const getSummary = async (req, res) => {
   }
 }
 
-// ─── Get Resolution Time ──────────────────────────────────
+//  Get Resolution Time 
 const getResolutionTime = async (req, res) => {
   try {
     const resolvedIssues = await Issue.find({ status: 'resolved' })
